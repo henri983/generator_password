@@ -9,40 +9,41 @@ root.geometry("925x500+300+200")
 root.configure(bg="#fff")
 root.resizable(False, False)  # Empêche le redimensionnement
 
-# Fonction d'inscription
 def Inscription():
     nom_utilisateur = user.get()
     mot_de_passe = code.get()
     confirmer_mot_de_passe = conform_code.get()
 
-    # Vérifie si les deux mots de passe sont identiques
     if mot_de_passe == confirmer_mot_de_passe:
         try:
-            # Lecture des données existantes
-            file = open('datasheet.txt', 'r+')
-            d = file.read()
-            r = ast.literal_eval(d)  # Convertit la chaîne en dictionnaire
+            with open('datasheet.txt', 'r') as file:
+                d = file.read()
+                if d.strip() == "":
+                    r = {}  # Si fichier vide, créer un dictionnaire vide
+                else:
+                    r = ast.literal_eval(d)  # Charger les données existantes
 
-            dict2 = {nom_utilisateur: mot_de_passe}  # Nouvelles données à ajouter
-            r.update(dict2)  # Ajoute ou met à jour l'utilisateur
-            file.truncate(0)  # Vide le contenu actuel (inutile ici car le fichier est fermé ensuite)
-            file.close()
+            # Ajouter le nouvel utilisateur sans supprimer les anciens
+            if nom_utilisateur in r:
+                messagebox.showerror("Erreur", "Ce nom d'utilisateur existe déjà.")
+            else:
+                r[nom_utilisateur] = mot_de_passe
 
-            # Écriture des nouvelles données
-            file = open('datasheet.txt', 'w')
-            w = file.write(str(r))  # Écrit le dictionnaire sous forme de chaîne
-           
-            messagebox.showinfo("Inscription", "Inscription réussie")
+                with open('datasheet.txt', 'w') as file:
+                    file.write(str(r))  # Réécrire toutes les données mises à jour
 
-        except:
-            # Si le fichier n'existe pas ou une erreur survient, on le crée avec un utilisateur par défaut
-            file = open('datasheet.txt', 'w')
-            pp = str({"Nom d'utilisateur": "Mot de passe"})
-            file.write(pp)
-            file.close()
+                messagebox.showinfo("Inscription", "Inscription réussie")
+        except FileNotFoundError:
+            # Si le fichier n'existe pas, le créer avec la première entrée
+            with open('datasheet.txt', 'w') as file:
+                file.write(str({nom_utilisateur: mot_de_passe}))
+            messagebox.showinfo("Inscription", "Inscription réussie (nouveau fichier créé)")
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Une erreur s'est produite : {e}")
     else:
-        # Message d'erreur si les mots de passe ne correspondent pas
-        messagebox.showerror("Invalid", "Les mots de passe ne correspondent pas")
+        messagebox.showerror("Erreur", "Les mots de passe ne correspondent pas")
+
+
 
 # Chargement et affichage de l'image
 img = PhotoImage(file="login.png")
