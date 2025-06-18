@@ -99,7 +99,11 @@ def on_leave(e):
 
 conform_code = Entry(frame, width=25, fg="black", border=0, bg="white", font=("Microsoft YaHei UI Light", 11))
 conform_code.place(x=30, y=220)
+<<<<<<< HEAD
 conform_code.insert(0, "Confirmer le mot de passe")
+=======
+conform_code.insert(0, "Mot de passe")
+>>>>>>> 8c16d26746cd2338979d2079f80d58213996eb12
 conform_code.bind("<FocusIn>", on_enter)
 conform_code.bind("<FocusOut>", on_leave)
 Frame(frame, width=295, height=2, bg='black').place(x=25, y=247)
