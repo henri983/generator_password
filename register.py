@@ -75,7 +75,7 @@ def on_leave(e):
         
 code = Entry(frame, width=25, fg="black", border=0, bg="white", font=("Microsoft YaHei UI Light", 11))
 code.place(x=30, y=150)
-code.insert(0, "Mode de passe")
+code.insert(0, "Mot de passe")
 code.bind("<FocusIn>", on_enter)
 code.bind("<FocusOut>", on_leave)
 
@@ -92,7 +92,7 @@ def on_leave(e):
         
 conform_code = Entry(frame, width=25, fg="black", border=0, bg="white", font=("Microsoft YaHei UI Light", 11))
 conform_code.place(x=30, y=220)
-conform_code.insert(0, "Mode de passe")
+conform_code.insert(0, "Mot de passe")
 conform_code.bind("<FocusIn>", on_enter)
 conform_code.bind("<FocusOut>", on_leave)
 

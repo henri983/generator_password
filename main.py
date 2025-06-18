@@ -8,10 +8,10 @@ root.configure(bg="#fff")
 root.resizable(False, False)
 
 def connexion():
-    username = use.get()
+    userrname = user.get()
     password = code_word.get()
 
-    if username == "admin" and password == "1234":
+    if userrname == "admin" and password == "1234":
         screen = Toplevel(root)
         screen.title("Application")
         screen.geometry("925x500+300+200")
@@ -20,13 +20,13 @@ def connexion():
         Label(screen, text="Bienvenue à vous ", bg="white", font=("Microsoft YaHei UI Light", 50)).pack(expand=True)
 
         screen.mainloop()
-    elif username != "admin" or password != "1234":
+    elif userrname != "admin" or password != "1234":
         messagebox.showerror("Erreur", "Nom d'utilisateur ou mot de passe incorrect")
 
     elif password != "1234":
         messagebox.showerror("Erreur", "Mot de passe incorrect")  
 
-    elif username != "admin":
+    elif userrname != "admin":
         messagebox.showerror("Erreur", "Nom d'utilisateur incorrect")
 
 
@@ -45,18 +45,17 @@ heading.place(x=100, y=5)
 #################-------------------------------------------------
 
 def on_enter(e):
-    use.delete(0, 'end')
+    user.delete(0, 'end')
 def on_leave(e): 
-    name= use.get()
+    name= user.get()
     if name == '':
-        use.insert(0, "Nom d'utilisateur")
-    else:
-        pass   
-use = Entry(frame, width=25, fg="black", border=2, bg="white", font=("Microsoft YaHei UI Light", 11))
-use.place(x=30, y=80)
-use.insert(0, "Nom d'utilisateur")
-use.bind("FocusIn", on_enter)
-use.bind("<FocusOut>", on_leave)
+        user.insert(0, "Nom d'utilisateur")
+      
+user = Entry(frame, width=25, fg="black", border=0, bg="white", font=("Microsoft YaHei UI Light", 11))
+user.place(x=30, y=80)
+user.insert(0, "Nom d'utilisateur")
+user.bind("FocusIn", on_enter)
+user.bind("<FocusOut>", on_leave)
 
 Frame(frame, width=295, height=2, bg='black').place(x=25, y=107)
 
@@ -66,12 +65,12 @@ def on_enter(e):
 def on_leave(e): 
     name= code_word.get()
     if name == '':
-        code_word.insert(0, "Mode de passe")
+        code_word.insert(0, "Mot de passe")
     
         
-code_word = Entry(frame, width=25, fg="black", border=2, bg="white", font=("Microsoft YaHei UI Light", 11))
+code_word = Entry(frame, width=25, fg="black", border=0, bg="white", font=("Microsoft YaHei UI Light", 11))
 code_word.place(x=30, y=150)
-code_word.insert(0, "Mode de passe")
+code_word.insert(0, "Mot de passe")
 code_word.bind("<FocusIn>", on_enter)
 code_word.bind("<FocusOut>", on_leave)
 
