@@ -1,5 +1,12 @@
 from tkinter import *
 from tkinter import messagebox
+import subprocess
+
+def ouvrir_inscription():
+    try:
+        subprocess.Popen(["python", "register.py"])
+    except Exception as e:
+        messagebox.showerror("Erreur", f"Impossible d'ouvrir le formulaire d'inscription : {e}")
 
 root = Tk()
 root.title("Connexion")
@@ -103,8 +110,9 @@ Button(frame, width=39, pady=7, text="Connexion", bg="#57a1f8", fg="white",comma
 label = Label(frame, text="Mot de passe oublié ?", bg="white", fg="black", font=("Microsoft YaHei UI Light", 9))
 label.place(x=75, y=270)
 
-Inscription = Button(frame, width=6, text="S'inscrire",cursor="hand2", bg="white", fg="#57a1f8", border=0, font=("Microsoft YaHei UI Light", 9))
-Inscription.place(x=215, y=270)
+Inscription = Button(frame, width=6, text="S'inscrire", cursor="hand2", bg="white",
+       fg="#57a1f8", border=0, font=("Microsoft YaHei UI Light", 9), command=ouvrir_inscription).place(x=215, y=270)
+
 #################-------------------------------------------------
 
 root.mainloop() 
