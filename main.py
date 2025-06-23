@@ -45,6 +45,8 @@ def toggle_password():
         show_password.set(True)
         bouton_oeil.config(text="👁️‍🗨️")
 
+
+
 root = Tk()
 root.title("Connexion")
 root.geometry("925x500+300+200")
@@ -52,25 +54,32 @@ root.configure(bg="#fff")
 root.resizable(False, False)
 
 def connexion():
-    userrname = user.get()
-    password = code_word.get()
+    nom_utilisateur = user.get()
+    mot_de_passe = code_word.get()
 
-    if userrname == "admin" and password == "1234":
-        screen = Toplevel(root)
-        screen.title("Application")
-        screen.geometry("925x500+300+200")
-        screen.config(bg="white")
+    try:
+        with open('datasheet.txt', 'r', encoding='utf-8') as file:
+            data = file.read()
+            utilisateurs = {} if data.strip() == "" else ast.literal_eval(data)
+    except FileNotFoundError:
+        messagebox.showerror("Erreur", "Aucun utilisateur enregistré.")
+        return
+    except Exception as e:
+        messagebox.showerror("Erreur", f"Erreur lecture fichier : {e}")
+        return
 
-        Label(screen, text="Bienvenue à vous ", bg="white", font=("Microsoft YaHei UI Light", 50)).pack(expand=True)
-
-        screen.mainloop()
-    elif userrname != "admin" or password != "1234":
-        messagebox.showerror("Erreur", "Nom d'utilisateur ou mot de passe incorrect")
-
-    elif password != "1234":
-        messagebox.showerror("Erreur", "Mot de passe incorrect")  
-
-    elif userrname != "admin":
+    # Vérifier utilisateur et mot de passe
+    if nom_utilisateur in utilisateurs:
+        if utilisateurs[nom_utilisateur] == mot_de_passe:
+            # Connexion réussie
+            screen = Toplevel(root)
+            screen.title("Application")
+            screen.geometry("925x500+300+200")
+            screen.config(bg="white")
+            Label(screen, text=f"Bienvenue {nom_utilisateur} !", bg="white", font=("Microsoft YaHei UI Light", 50)).pack(expand=True)
+        else:
+            messagebox.showerror("Erreur", "Mot de passe incorrect")
+    else:
         messagebox.showerror("Erreur", "Nom d'utilisateur incorrect")
 
 
