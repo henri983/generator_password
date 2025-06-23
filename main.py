@@ -78,14 +78,34 @@ def connexion():
             screen.geometry("925x500+300+200")
             screen.config(bg="white")
 
+            # ✅ Image d’arrière-plan (indentation corrigée)
+            bg_image = PhotoImage(file="background.png")
+            background_label = Label(screen, image=bg_image)
+            background_label.image = bg_image  # Garde une référence
+            background_label.place(x=0, y=0, relwidth=1, relheight=1)
+
             # Message de bienvenue
-            Label(screen, text=f"Bienvenue {nom_utilisateur} !", bg="white",
-                  font=("Microsoft YaHei UI Light", 32)).pack(pady=50)
+            # Créer un label pour afficher le message de bienvenue
+            message = f"Bienvenue {nom_utilisateur} !"
+            label_bienvenue = Label(screen, text=message, font=("Helvetica", 24, "bold"), fg="#57a1f8", bg="white")
+            label_bienvenue.place(x=925, y=50)  # Commence à droite (en dehors de la fenêtre)
+
+            # Fonction pour faire défiler le texte de droite à gauche
+            def defiler(x=925):
+                if x + label_bienvenue.winfo_reqwidth() > 0:
+                    label_bienvenue.place(x=x, y=50)
+                    screen.after(20, lambda: defiler(x - 2))  # Vitesse du défilement
+                else:
+                    # Recommence à droite quand il a disparu à gauche
+                    defiler(925)
+
+            # Lancer le défilement
+            screen.after(100, defiler)
 
             # Bouton Déconnexion
             Button(screen, text="Déconnexion", bg="#ff4d4d", fg="white",
                    font=("Microsoft YaHei UI Light", 12),
-                   command=screen.destroy).pack(pady=20)
+                   command=screen.destroy).pack(pady=200)
         else:
             messagebox.showerror("Erreur", "Mot de passe incorrect")
     else:
