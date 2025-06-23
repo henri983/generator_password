@@ -1,12 +1,49 @@
 from tkinter import *
 from tkinter import messagebox
 import subprocess
+import ast
 
 def ouvrir_inscription():
     try:
         subprocess.Popen(["python", "register.py"])
     except Exception as e:
         messagebox.showerror("Erreur", f"Impossible d'ouvrir le formulaire d'inscription : {e}")
+
+def afficher_mdp(event):
+    nom_utilisateur = user.get()
+    try:
+        with open('datasheet.txt', 'r', encoding='utf-8') as file:
+            data = file.read()
+            utilisateurs = {} if data.strip() == "" else ast.literal_eval(data)
+        if nom_utilisateur in utilisateurs:
+            mdp = utilisateurs[nom_utilisateur]
+            code_word.delete(0, END)
+            code_word.insert(0, mdp)
+            code_word.config(show="*")  # Masquer le mot de passe
+        else:
+            # Si utilisateur pas trouvé, on peut vider ou laisser vide
+            code_word.delete(0, END)
+            code_word.insert(0, "Mot de passe")
+            code_word.config(show="")
+    except FileNotFoundError:
+        # fichier pas trouvé, vide le champ
+        code_word.delete(0, END)
+        code_word.insert(0, "Mot de passe")
+        code_word.config(show="")
+    except Exception as e:
+        messagebox.showerror("Erreur", f"Erreur lecture fichier : {e}")
+
+def toggle_password():
+    if show_password.get():
+        # cacher mot de passe
+        code_word.config(show="*")
+        show_password.set(False)
+        bouton_oeil.config(text="👁️")
+    else:
+        # afficher mot de passe en clair
+        code_word.config(show="")
+        show_password.set(True)
+        bouton_oeil.config(text="👁️‍🗨️")
 
 root = Tk()
 root.title("Connexion")
@@ -78,30 +115,14 @@ def on_leave(e):
 code_word = Entry(frame, width=25, fg="black", border=0, bg="white", font=("Microsoft YaHei UI Light", 11))
 code_word.place(x=30, y=150)
 code_word.insert(0, "Mot de passe")
-code_word.bind("<FocusIn>", on_enter)
+code_word.bind("<FocusIn>", afficher_mdp)
 code_word.bind("<FocusOut>", on_leave)
+code_word.config(show="")
 
+show_password = BooleanVar(value=False)
+bouton_oeil = Button(frame, text="👁️", bg="white", border=0, command=toggle_password)
+bouton_oeil.place(x=300, y=150)
 
-
-######hIDE AND SHOW PASSWORD
-button_mode=True
-
-def hide():
-    global button_mode
-    if button_mode:
-        eyeButton.config(image=closeeye, activebackground="black")
-        code_word.config(show="*")
-        button_mode=False
-    else:
-        eyeButton.config(image=openeye, activebackground="black")
-        code_word.config(show="*")
-        button_mode=True
-
-
-openeye=PhotoImage(file="view.png")
-closeeye=PhotoImage(file="hide.png")
-eyeButton = Button(frame, image=openeye, border=0, bg="white", command=hide)
-eyeButton.place(x=780, y=410)
 
 Frame(frame, width=295, height=2, bg='black').place(x=25, y=177)
 
