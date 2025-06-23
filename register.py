@@ -3,6 +3,9 @@ from tkinter import messagebox
 import ast
 import string
 import random
+import os
+import sys
+import subprocess
 
 # --- Fonction inscription ---
 def Inscription():
@@ -50,6 +53,15 @@ def remplir_mot_de_passe():
     conform_code.delete(0, 'end')
     conform_code.insert(0, mot_de_passe)
     conform_code.config(show='*')
+
+def ouvrir_connexion():
+    root.destroy()  # Ferme la fenêtre actuelle
+    python_exe = sys.executable  # Chemin vers l'exécutable python utilisé
+    script_path = os.path.join(os.path.dirname(__file__), "main.py")  # chemin complet login.py
+    try:
+        subprocess.Popen([python_exe, script_path])
+    except Exception as e:
+        messagebox.showerror("Erreur", f"Impossible d'ouvrir la page de connexion : {e}")
 
 # --- Interface principale ---
 root = Tk()
@@ -165,14 +177,14 @@ Button(frame, text="Générer un mot de passe",  command=remplir_mot_de_passe,
 
 # --- Bouton S'inscrire ---
 Button(frame, width=39, pady=7, text="S'inscrire", bg="#57a1f8",
-       fg="white", border=0, command=Inscription).place(x=35, y=330)
+       fg="white", border=0, command=Inscription).place(x=35, y=320)
 
 # --- Lien vers Connexion (non actif) ---
 Label(frame, text="Vous avez déjà un compte ?", bg="white", fg="black",
-      font=("Microsoft YaHei UI Light", 9)).place(x=90, y=390)
+      font=("Microsoft YaHei UI Light", 9)).place(x=90, y=360)
 
 Button(frame, width=6, text="Connexion", cursor="hand2", bg="white",
-       fg="#57a1f8", border=0).place(x=260, y=390)
+       fg="#57a1f8", border=0, command=ouvrir_connexion).place(x=260, y=360)
 
 # --- Lancement de l'application ---
 root.mainloop()
