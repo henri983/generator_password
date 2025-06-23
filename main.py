@@ -68,7 +68,6 @@ def connexion():
         messagebox.showerror("Erreur", f"Erreur lecture fichier : {e}")
         return
 
-    # Vérifier utilisateur et mot de passe
     if nom_utilisateur in utilisateurs:
         if utilisateurs[nom_utilisateur] == mot_de_passe:
             # Connexion réussie
@@ -76,13 +75,18 @@ def connexion():
             screen.title("Application")
             screen.geometry("925x500+300+200")
             screen.config(bg="white")
-            Label(screen, text=f"Bienvenue {nom_utilisateur} !", bg="white", font=("Microsoft YaHei UI Light", 50)).pack(expand=True)
+
+            Label(screen, text=f"Bienvenue {nom_utilisateur} !", bg="white",
+                  font=("Microsoft YaHei UI Light", 32)).pack(pady=50)
+
+            # BOUTON DECONNEXION
+            Button(screen, text="Déconnexion", bg="#ff4d4d", fg="white",
+                   font=("Microsoft YaHei UI Light", 12),
+                   command=screen.destroy).pack(pady=20)
         else:
             messagebox.showerror("Erreur", "Mot de passe incorrect")
     else:
         messagebox.showerror("Erreur", "Nom d'utilisateur incorrect")
-
-
 
 img = PhotoImage(file="login.png")
 Label(root, image=img, bg="#fff").place(x=50, y=50)
