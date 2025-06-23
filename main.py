@@ -54,7 +54,7 @@ def on_leave(e):
 user = Entry(frame, width=25, fg="black", border=0, bg="white", font=("Microsoft YaHei UI Light", 11))
 user.place(x=30, y=80)
 user.insert(0, "Nom d'utilisateur")
-user.bind("FocusIn", on_enter)
+user.bind("<FocusIn>", on_enter)
 user.bind("<FocusOut>", on_leave)
 
 Frame(frame, width=295, height=2, bg='black').place(x=25, y=107)
@@ -73,6 +73,28 @@ code_word.place(x=30, y=150)
 code_word.insert(0, "Mot de passe")
 code_word.bind("<FocusIn>", on_enter)
 code_word.bind("<FocusOut>", on_leave)
+
+
+
+######hIDE AND SHOW PASSWORD
+button_mode=True
+
+def hide():
+    global button_mode
+    if button_mode:
+        eyeButton.config(image=closeeye, activebackground="black")
+        code_word.config(show="*")
+        button_mode=False
+    else:
+        eyeButton.config(image=openeye, activebackground="black")
+        code_word.config(show="*")
+        button_mode=True
+
+
+openeye=PhotoImage(file="view.png")
+closeeye=PhotoImage(file="hide.png")
+eyeButton = Button(frame, image=openeye, border=0, bg="white", command=hide)
+eyeButton.place(x=780, y=410)
 
 Frame(frame, width=295, height=2, bg='black').place(x=25, y=177)
 
