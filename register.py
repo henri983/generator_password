@@ -124,10 +124,6 @@ def toggle_password():
 bouton_oeil = Button(frame, text="👁️", bg="white", border=0, command=toggle_password)
 bouton_oeil.place(x=300, y=150)
 
-# --- Bouton génération ---
-Button(frame, text="Générer mot de passe", command=remplir_mot_de_passe,
-       bg="white", fg="#57a1f8", border=0, cursor="hand2").place(x=100, y=190)
-
 # --- Champ confirmation mot de passe ---
 def on_enter_confirm(e):
     if conform_code.get() == "Confirmer le mot de passe":
@@ -163,16 +159,20 @@ def toggle_confirm():
 bouton_oeil_confirm = Button(frame, text="👁️", bg="white", border=0, command=toggle_confirm)
 bouton_oeil_confirm.place(x=300, y=230)
 
+# --- Bouton Générer mot de passe (style amélioré) ---
+Button(frame, text="Générer un mot de passe",  command=remplir_mot_de_passe,
+        bg="white", fg="#57a1f8", border=0, cursor="hand2").place(x=100, y=280)
+
 # --- Bouton S'inscrire ---
 Button(frame, width=39, pady=7, text="S'inscrire", bg="#57a1f8",
-       fg="white", border=0, command=Inscription).place(x=35, y=300)
+       fg="white", border=0, command=Inscription).place(x=35, y=330)
 
 # --- Lien vers Connexion (non actif) ---
 Label(frame, text="Vous avez déjà un compte ?", bg="white", fg="black",
-      font=("Microsoft YaHei UI Light", 9)).place(x=90, y=360)
+      font=("Microsoft YaHei UI Light", 9)).place(x=90, y=390)
 
 Button(frame, width=6, text="Connexion", cursor="hand2", bg="white",
-       fg="#57a1f8", border=0).place(x=260, y=360)
+       fg="#57a1f8", border=0).place(x=260, y=390)
 
 # --- Lancement de l'application ---
 root.mainloop()
