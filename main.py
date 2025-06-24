@@ -2,6 +2,9 @@ from tkinter import *
 from tkinter import messagebox
 import subprocess
 import mysql.connector
+import hashlib
+import os 
+import sys   
 
 # --- Connexion à la base de données ---
 def connect_db():
@@ -33,7 +36,9 @@ def connexion():
 
         if result:
             mot_de_passe_bdd = result[0]
-            if mot_de_passe == mot_de_passe_bdd:
+            messagebox.showinfo("Mot de passe (hash)", f"Hash stocké : {mot_de_passe_bdd}")
+
+            if verify_password(mot_de_passe_bdd, mot_de_passe):
                 # Connexion réussie
                 screen = Toplevel(root)
                 screen.title("Application")
@@ -77,6 +82,12 @@ def connexion():
 
     except mysql.connector.Error as e:
         messagebox.showerror("Erreur BDD", f"MySQL : {e}")
+
+def verify_password(stored_password, provided_password):
+    salt = bytes.fromhex(stored_password[:32])
+    stored_hash = stored_password[32:]
+    new_hash = hashlib.pbkdf2_hmac('sha256', provided_password.encode(), salt, 100000).hex()
+    return new_hash == stored_hash
 
 # --- Interface graphique (identique à ta version) ---
 root = Tk()

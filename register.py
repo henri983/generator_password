@@ -5,7 +5,14 @@ import string
 import random
 import os
 import sys
+import hashlib
 import subprocess
+
+def hash_password(password, salt=None):
+    if not salt:
+        salt = os.urandom(16)  # 16 octets
+    hashed = hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 100000)
+    return salt.hex() + hashed.hex()
 
 # --- Connexion à la base de données ---
 def connect_db():
@@ -39,8 +46,8 @@ def Inscription():
         if cursor.fetchone():
             messagebox.showerror("Erreur", "Ce nom d'utilisateur existe déjà.")
         else:
-            cursor.execute("INSERT INTO utilisateurs (nom_utilisateur, mot_de_passe) VALUES (%s, %s)",
-                           (nom_utilisateur, mot_de_passe))
+            hashed = hash_password(mot_de_passe)
+            cursor.execute("INSERT INTO utilisateurs (nom_utilisateur, mot_de_passe) VALUES (%s, %s)", (nom_utilisateur, hashed)),
             conn.commit()
             messagebox.showinfo("Inscription", "Inscription réussie")
 
