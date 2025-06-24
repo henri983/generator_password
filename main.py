@@ -154,6 +154,6 @@ Label(frame, text="Pas encore de compte ?", bg="white", fg="black",
 
 Button(frame, width=6, text="S'inscrire", cursor="hand2", bg="white",
        fg="#57a1f8", border=0, font=("Microsoft YaHei UI Light", 9),
-       command=ouvrir_inscription).place(x=215, y=270)
+       command=ouvrir_inscription).place(x=220, y=270)
 
 root.mainloop()

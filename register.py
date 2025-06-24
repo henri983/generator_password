@@ -109,12 +109,12 @@ user.bind("<FocusOut>", on_leave_user)
 Frame(frame, width=295, height=2, bg='black').place(x=25, y=107)
 
 # Mot de passe
-def on_enter_pass(e):
+def on_enter_code(e):
     if code.get() == "Mot de passe":
         code.delete(0, 'end')
         code.config(show="*")
 
-def on_leave_pass(e):
+def on_leave_code(e):
     if code.get() == '':
         code.config(show="")
         code.insert(0, "Mot de passe")
@@ -122,17 +122,33 @@ def on_leave_pass(e):
 code = Entry(frame, width=25, fg="black", border=0, bg="white", font=("Microsoft YaHei UI Light", 11))
 code.place(x=30, y=150)
 code.insert(0, "Mot de passe")
-code.bind("<FocusIn>", on_enter_pass)
-code.bind("<FocusOut>", on_leave_pass)
+code.bind("<FocusIn>", on_enter_code)
+code.bind("<FocusOut>", on_leave_code)
 Frame(frame, width=295, height=2, bg='black').place(x=25, y=177)
 
+# --- Bouton œil ---
+show_password = BooleanVar(value=False)
+def toggle_password():
+    if show_password.get():
+        code.config(show="*")
+        show_password.set(False)
+        bouton_oeil.config(text="👁️")
+    else:
+        code.config(show="")
+        show_password.set(True)
+        bouton_oeil.config(text="👁️‍🗨️")
+
+bouton_oeil = Button(frame, text="👁️", bg="white", border=0, command=toggle_password)
+bouton_oeil.place(x=300, y=150)
+
+
 # Confirmer mot de passe
-def on_enter_conform_pass(e):
+def on_enter_conform_code(e):
     if conform_code.get() == "Confirmer le mot de passe":
         conform_code.delete(0, 'end')
         conform_code.config(show="*")
 
-def on_leave_conform_pass(e):
+def on_leave_conform_code(e):
     if conform_code.get() == '':
         conform_code.config(show="")
         conform_code.insert(0, "Confirmer le mot de passe")
@@ -140,31 +156,30 @@ def on_leave_conform_pass(e):
 conform_code = Entry(frame, width=25, fg="black", border=0, bg="white", font=("Microsoft YaHei UI Light", 11))
 conform_code.place(x=30, y=230)
 conform_code.insert(0, "Confirmer le mot de passe")
-conform_code.bind("<FocusIn>", on_enter_conform_pass)
-conform_code.bind("<FocusOut>", on_leave_conform_pass)
+conform_code.bind("<FocusIn>", on_enter_conform_code)
+conform_code.bind("<FocusOut>", on_leave_conform_code)
 Frame(frame, width=295, height=2, bg='black').place(x=25, y=257)
 
-# --- Bouton œil pour mot de passe ---
-def toggle_password():
- if show_password.get():
-     if code.get() != "Mot de passe":
-         code.config(show="")
-     if conform_code.get() != "Confirmer le mot de passe":
-         conform_code.config(show="")
- else:
-     if code.get() != "Mot de passe":
-         code.config(show="*")
-     if conform_code.get() != "Confirmer le mot de passe":
-            conform_code.config(show="*")
+# --- Bouton œil confirmation ---
+show_confirm = False
+def toggle_confirm():
+    global show_confirm
+    if show_confirm:
+        conform_code.config(show="*")
+        bouton_oeil_confirm.config(text="👁️")
+        show_confirm = False
+    else:
+        conform_code.config(show="")
+        bouton_oeil_confirm.config(text="👁️‍🗨️")
+        show_confirm = True
 
-show_password = BooleanVar()
-Checkbutton(frame, text="Afficher le mot de passe", variable=show_password,
-           command=toggle_password, bg="white", font=("Microsoft YaHei UI Light",  9)).place(x=100, y=265)
-        
+bouton_oeil_confirm = Button(frame, text="👁️", bg="white", border=0, command=toggle_confirm)
+bouton_oeil_confirm.place(x=300, y=230)
+
 
 # Bouton générer mot de passe
 Button(frame, text="Générer un mot de passe", command=remplir_mot_de_passe,
-       bg="white", fg="#57a1f8", border=0, cursor="hand2").place(x=100, y=295)
+       bg="white", fg="#57a1f8", border=0, cursor="hand2").place(x=100, y=280)
 
 # Bouton S'inscrire
 Button(frame, width=39, pady=7, text="S'inscrire", bg="#57a1f8",
