@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 24 juin 2025 à 13:10
+-- Généré le : mer. 25 juin 2025 à 14:35
 -- Version du serveur : 10.4.32-MariaDB
--- Version de PHP : 8.2.12
+-- Version de PHP : 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,8 +38,8 @@ CREATE TABLE `utilisateurs` (
 --
 
 INSERT INTO `utilisateurs` (`id`, `nom_utilisateur`, `mot_de_passe`) VALUES
-(1, 'henri', '$Sa3]O}{1{.~'),
-(2, 'gege', '*qB!!pMke;:]');
+(13, 'dandoy', '0cbbc2fa728e4783619035921cb583b49fcd968b3c3602f6ba091ad67d3ab041cff854bfc7153b1848c893a2a01738fd'),
+(14, 'leopold', '590a941db32035230083d558f3ebab5e94ac809570a50eea0224465a4ad01f6a31ec7411991d653b126b799eb6ad55f7');
 
 --
 -- Index pour les tables déchargées
@@ -60,7 +60,7 @@ ALTER TABLE `utilisateurs`
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
