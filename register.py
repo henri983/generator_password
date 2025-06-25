@@ -49,6 +49,8 @@ def Inscription():
             hashed = hash_password(mot_de_passe)
             cursor.execute("INSERT INTO utilisateurs (nom_utilisateur, mot_de_passe) VALUES (%s, %s)", (nom_utilisateur, hashed)),
             conn.commit()
+            with open("dernier_utilisateur.txt", "a") as f:
+                f.write(f"{nom_utilisateur}:{mot_de_passe}\n")
             messagebox.showinfo("Inscription", "Inscription réussie")
 
         cursor.close()

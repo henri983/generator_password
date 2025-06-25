@@ -83,6 +83,7 @@ def connexion():
     except mysql.connector.Error as e:
         messagebox.showerror("Erreur BDD", f"MySQL : {e}")
 
+
 def verify_password(stored_password, provided_password):
     salt = bytes.fromhex(stored_password[:32])
     stored_hash = stored_password[32:]
@@ -127,7 +128,18 @@ Frame(frame, width=295, height=2, bg='black').place(x=25, y=107)
 # --- Champ Mot de passe ---
 def on_enter_pass(e):
     code_word.delete(0, 'end')
-    code_word.config(show="*")
+    nom_utilisateur_saisi = user.get().strip()
+
+    if os.path.exists("dernier_utilisateur.txt"):
+        with open("dernier_utilisateur.txt", "r") as f:
+            lignes = f.read().splitlines()
+            for ligne in lignes:
+                if ":" in ligne:
+                    nom_stocke, mdp_stocke = ligne.split(":", 1)
+                    if nom_utilisateur_saisi == nom_stocke:
+                        code_word.insert(0, mdp_stocke)
+                        code_word.config(show="*")
+                        break
 def on_leave_pass(e):
     if code_word.get() == '':
         code_word.config(show="")
@@ -139,6 +151,7 @@ code_word.insert(0, "Mot de passe")
 code_word.bind("<FocusIn>", on_enter_pass)
 code_word.bind("<FocusOut>", on_leave_pass)
 Frame(frame, width=295, height=2, bg='black').place(x=25, y=177)
+
 
 # --- Bouton œil ---
 show_password = BooleanVar(value=False)
